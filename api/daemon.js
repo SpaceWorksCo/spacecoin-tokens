@@ -9,29 +9,18 @@ const platform = os.platform()
 const path = require('path');
 const fixPath = require('fix-path');
 
-let default_config;
-
-if (process.argv.indexOf('chain=rick') > -1) {
-  default_config = {
-    bin_folder: getBinsFolder(),
-    chain_name: 'RICK',
-    coin_name: 'RICK',
-    chain_launch_params: '-ac_supply=90000000000 -ac_reward=100000000 -ac_cc=3 -ac_staked=10 -addnode=138.201.136.145 -addnode=95.217.44.58 -printtoconsole'
-  }
-} else {
-  default_config = {
-    bin_folder: getBinsFolder(),
-    chain_name: 'WSB',
-    coin_name: 'WSB',
-    chain_launch_params: '-ac_supply=90000000000 -ac_cc=3 -ac_reward=100000000 -addnode=94.130.38.173 -addnode=178.63.47.105 -printtoconsole'
-  }
+const default_config = {
+  bin_folder: getBinsFolder(),
+  chain_name: 'SPACE',
+  coin_name: 'SPACE',
+  chain_launch_params: '-ac_supply=0 -ac_eras=6 -ac_reward=3600000000,2700000000,1800000000,900000000,600000000,300000000 -ac_end=939393,3757572,12212109,325343422,638474735,951606048 -ac_blocktime=30 -ac_staked=50 -ac_cbmaturity=1 -ac_cc=939 -ac_sapling=1 -addnode=165.227.35.158 -addnode=167.172.39.135 -addnode=165.22.64.156 -addnode=188.166.221.247 -printtoconsole'
 }
 
 // Data
 let komodod_path = undefined
 let cli_path = undefined
 let cli_args = undefined
-let keypair = undefined 
+let keypair = undefined
 let komodod = undefined // This will be the spawned cli komodod object
 let config = undefined
 
@@ -62,11 +51,6 @@ function readConfig() {
         console.log('Config file does not exist or has invalid JSON, generating the default one' + config_path)
     }
 
-    if (!fs.existsSync(getKomodoFolder())) {
-      console.log('Dir ' + getKomodoFolder() + ' doesn\'t exist, create new');
-      fs.mkdirSync(getKomodoFolder());
-    }
-
     // Write config
     fs.writeFileSync(config_path, JSON.stringify(config))
 
@@ -74,28 +58,10 @@ function readConfig() {
 
     // Set binary variables
     komodod_path = config.bin_folder + 'komodod -ac_name=' + config.chain_name + ' '
-    
+
     // CLI
     cli_path = config.bin_folder + 'komodo-cli'
     cli_args = '-ac_name=' + config.chain_name
-}
-
-function forceImportKey(keypair) {
-  return new Promise((resolve, reject) => {
-    importPrivKey(keypair.privkey).then(() => {
-      getAddressFromPubkey(keypair.pubkey).then(addr_info => {
-          keypair.address = addr_info.address
-          keypair.CCaddress = addr_info.CCaddress
-
-          resolve({ 
-              generated: false, 
-              privkey: keypair.privkey, 
-              pubkey: keypair.pubkey, 
-              address: addr_info.address 
-          })
-      })
-    })
-  })
 }
 
 function prepareDaemon(needs_keygen) {
@@ -106,11 +72,11 @@ function prepareDaemon(needs_keygen) {
                     keypair.address = addr_info.address
                     keypair.CCaddress = addr_info.CCaddress
 
-                    resolve({ 
-                        generated: needs_keygen, 
-                        privkey: keypair.privkey, 
-                        pubkey: keypair.pubkey, 
-                        address: addr_info.address 
+                    resolve({
+                        generated: needs_keygen,
+                        privkey: keypair.privkey,
+                        pubkey: keypair.pubkey,
+                        address: addr_info.address
                     })
                 })
             })
@@ -143,10 +109,10 @@ function startUp(pubkey) {
         // If pubkey exists
         else {
             keypair = { privkey: '', pubkey }
-        
+
             console.log('Launching with existing pubkey:' + pubkey)
         }
-            
+
         // Launch the daemon
         prepareDaemon(needs_keygen).then(data => resolve(data))
     })
@@ -181,11 +147,11 @@ function launchDaemon(pubkey) {
                     keypair.address = addr_info.address
                     keypair.CCaddress = addr_info.CCaddress
 
-                    resolve({ 
-                        generated: false, 
-                        privkey: keypair.privkey, 
-                        pubkey: keypair.pubkey, 
-                        address: addr_info.address 
+                    resolve({
+                        generated: false,
+                        privkey: keypair.privkey,
+                        pubkey: keypair.pubkey,
+                        address: addr_info.address
                     })
                   })
                 }
@@ -216,10 +182,10 @@ function stopDaemon() {
             // If we get a close signal, that's it
             komodod.on('close', code => {
                 clearTimeout(timeout)
-                
+
                 resolve()
             })
-            
+
         })
     })
 }
@@ -309,14 +275,14 @@ function getTokenList() {
                 tokens.forEach((tok, i, arr) => {
                     arr[i] = { id: tok }
                 })
-    
+
                 // Get token information
                 Promise.all(tokens.map(t => {
                     return new Promise((resolve, reject) => {
                         // Get name and balance
                         Promise.all([
                             getTokenName(t.id).then(name => { t.name = name; }),
-                            getTokenBalance(t.id).then(balance => { t.balance = balance; })                        
+                            getTokenBalance(t.id).then(balance => { t.balance = balance; })
                         ]).then(() => { resolve() })
                     })
                 })).then(() => { resolve(tokens) })
@@ -339,15 +305,15 @@ function getTokenOrders() {
             //console.warn('myorders', myorders);
 
             child_process.execFile(cli_path, to_cli_args('tokenorders'), (error, stdout, stderr) => {
-              
+
               if(stderr) {
                   console.log('getTokenOrders failed: ', stderr)
                   reject(stderr)
               }
-  
+
               if(stdout) {
                   let orders = JSON.parse(stdout)
-      
+
                   // Get token information
                   Promise.all(orders.map(t => {
                       return new Promise((resolve, reject) => {
@@ -362,7 +328,7 @@ function getTokenOrders() {
                                     t.isMine = true;
                                   }
                                 }
-                              })                     
+                              })
                           ]).then(() => { resolve() })
                       })
                   })).then(() => { resolve(orders) })
@@ -372,7 +338,7 @@ function getTokenOrders() {
         }
 
     })
-    })
+  })
 }
 
 function importPrivKey(key) {
@@ -472,7 +438,7 @@ function sendTokenToAddress(token_id, address, amount) {
 
             if(stdout) {
                 console.log('tokentransfer ' + address + ' ' + amount)
-    
+
                 broadcastTX(JSON.parse(stdout).hex).then(txid => {
                     resolve(txid)
                 }).catch(e => {
@@ -490,7 +456,7 @@ function sendTokenToAddress(token_id, address, amount) {
 function createToken(name, supply, description) {
     return new Promise((resolve, reject) => {
         console.log('Creating token ' + name + ', supply: ' + supply + ' (' + (supply * 0.00000001) + ') ' + ' description: ' + description)
-        
+
         let args = to_cli_args('tokencreate ' + name + ' ' + supply * 0.00000001)
         if(description !== '') args.push('"' + description + '"')
 
@@ -518,7 +484,7 @@ function createToken(name, supply, description) {
 function createTokenTradeOrder(action, supply, tokenid, price) {
     return new Promise((resolve, reject) => {
         console.log('Creating token buy order supply:' + supply + ', tokenid: ' + tokenid + ', price: ' + price)
-        
+
         child_process.execFile(cli_path, to_cli_args('token' + (action === 'buy' ? 'bid' : 'ask')
                                             + ' ' + supply + ' ' + tokenid + ' ' + price), (error, stdout, stderr) => {
 
@@ -543,7 +509,7 @@ function createTokenTradeOrder(action, supply, tokenid, price) {
 function fillTokenOrder(func, tokenid, txid, count) {
     return new Promise((resolve, reject) => {
         console.log('Filling order token order:' + func + ', tokenid: ' + tokenid + ', txid: ' + txid + ' count: ' + count)
-        
+
         child_process.execFile(cli_path, to_cli_args('tokenfill' + (func === 'buy' ? 'ask' : 'bid')
                                             + ' ' + tokenid + ' ' + txid + ' ' + count), (error, stdout, stderr) => {
 
@@ -568,7 +534,7 @@ function fillTokenOrder(func, tokenid, txid, count) {
 function cancelTokenOrder(action, tokenid, txid) {
     return new Promise((resolve, reject) => {
         console.log('Cancelling order token order:' + action + ', tokenid: ' + tokenid + ', txid: ' + txid)
-        
+
         const cli = child_process.execFile(cli_path, to_cli_args('tokencancel' + action + ' ' + tokenid + ' ' + txid), (error, stdout, stderr) => {
 
             if(stderr) {
@@ -584,7 +550,7 @@ function cancelTokenOrder(action, tokenid, txid) {
                     reject(e)
                 })
             }
-            
+
         })
     })
 }
@@ -605,15 +571,15 @@ function getKeyPair() {
 
 function getKomodoFolder() {
     // macOS
-    if(platform === 'darwin') 
-        return os.homedir() + '/Library/Application Support/Komodo/' + config.chain_name + '/'  
+    if(platform === 'darwin')
+        return os.homedir() + '/Library/Application Support/Komodo/' + config.chain_name + '/'
 
     // Windows
-    if(platform === 'win32') 
-        return process.env.APPDATA + '\\Komodo\\' + config.chain_name + '\\' 
+    if(platform === 'win32')
+        return process.env.APPDATA + '\\Komodo\\' + config.chain_name + '\\'
 
     // Probably Linux
-    return os.homedir() + '/.komodo/' + config.chain_name + '/'  
+    return os.homedir() + '/.komodo/' + config.chain_name + '/'
 }
 
 function getBinsFolder() {
@@ -649,7 +615,5 @@ module.exports = {
     getTokenOrders,
     fillTokenOrder,
     cancelTokenOrder,
-    readConfig,
-    forceImportKey,
-    chainName: default_config.chain_name,
-} 
+    readConfig
+}

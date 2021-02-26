@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="style.css">
-    <title>Komodo Tokens Wallet</title>
+    <title>Spacecoin Tokens App</title>
   </head>
   <body>
     <!-- NAV-BAR -->
@@ -14,8 +14,8 @@
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
                 <a href="#">
-                  <img src="img/sec_logo.png" height="35" class="d-inline-block" alt="">
-                  Tokens Wallet 
+                  <img src="img/space_logo.png" height="35" class="d-inline-block" alt="">
+                  Tokens App
                 </a>
             </li>
             <li>
@@ -28,19 +28,13 @@
               <a id="nav-trade" href="#">Trade</a>
             </li>
             <li>
-              <a id="nav-explorer" href="#">Tokens Explorer (PoC)</a>
+              <a id="nav-history" href="#">History</a>
+            </li>
+            <li>
+              <a id="nav-settings" href="#">Settings</a>
             </li>
             <hr>
 
-            <li>
-                <button id="button-show-keys" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-show-keys">Show keys</button>  
-            </li>
-            <li>
-                <button id="button-change-pubkey" type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-change-pubkey">Change Public key</button>
-            </li>
-            <li>
-                <button id="button-import-keys" type="button" class="btn btn-success btn-sm">Force import keys</button>  
-            </li>
         </ul>
       </div>
 
@@ -57,102 +51,224 @@
               <span id="status-text"></span>
           </div>
 
-          <!-- TOKENS -->
-          <div id="tokens-page-only">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <label class="input-group-text" for="select-tokens">Token</label>
-                </div>
-                <select class="custom-select" id="select-tokens"></select>
-                <div class="input-group-append">
-                  <button id="button-token-create" type="button" class="btn btn-outline-secondary my-2 my-sm-0" data-toggle="modal" data-target="#modal-create-token">Create</button>  
-                </div>
-              </div>
-
-            <hr>
-            <form id="form-token-send">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Pubkey</span>
-                </div>
-                <input id="input-token-address" class="form-control" placeholder="Enter the pubkey of recipient" required>
-              </div>
-    
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Amount</span>
-                </div>
-                <input id="input-token-amount" type="number" min="1" step="1" class="form-control" placeholder="Enter the amount you'll send" required>
-              </div>
-                
-              <div style="display: flex;">
-                <button id="button-token-send" type="submit" class="btn btn-info">Send</button>
-                <span class="align-middle" style="white-space: unset; margin-left: 1em"><small class="text-muted">
-                  After sending token, balance might appear as '0' until the transaction is <strong>validated.</strong> Please wait until it's <strong>refreshed</strong>.
-                </small></span>
-              </div>
-            </form>
-          </div>
 
 
 
-
-          <!-- WALLET -->
+          <!-- Navbar 1 - WALLET -->
           <div id="wallet-page-only">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Balance</span>
-              </div>
-              <input id="balance" class="form-control" placeholder="Loading the amount..." disabled>
-            </div>
-            
-            <hr>
-            
 
-            <form id='form-send'>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Address</span>
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" href="#nav-wallet-tokens" role="tab" data-toggle="tab">Tokens</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#nav-wallet-spacecoin" role="tab" data-toggle="tab">Spacecoin</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active show" id="nav-wallet-tokens">
+                  <div class="panel panel-info" id="result_panel">
+                      <div class="panel-body">
+                        <hr>
+                        <div class="header">
+                          <h5 class="title" id="title-token-wallet">Your wallet for tokens on the Spacecoin blockchain.</h5>
+                        </div>
+                        <hr>
+
+                        <div class="header">
+                          <h5 class="title" id="receive-coins-wallet">Send Tokens</h5>
+                        </div>
+
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <label class="input-group-text" for="select-tokens">Token</label>
+                              </div>
+                              <select class="custom-select" id="select-tokens"></select>
+                              <div class="input-group-append">
+                                <button id="button-token-create" type="button" class="btn btn-outline-secondary my-2 my-sm-0" data-toggle="modal" data-target="#modal-create-token">Create</button>
+                              </div>
+                            </div>
+                          <hr>
+                          <form id="form-token-send">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">Pubkey</span>
+                              </div>
+                              <input id="input-token-address" class="form-control" placeholder="Enter the pubkey of recipient" required>
+                            </div>
+
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">Amount</span>
+                              </div>
+                              <input id="input-token-amount" type="number" min="1" step="1" class="form-control" placeholder="Enter the amount you'll send" required>
+                            </div>
+
+                            <div style="display: flex;">
+                              <button id="button-token-send" type="submit" class="btn btn-info">Send</button>
+                              <span class="align-middle" style="white-space: unset; margin-left: 1em"><small class="text-muted">
+                                After sending token, balance might appear as '0' until the transaction is <strong>confirmed.</strong> Please wait until it's <strong>refreshed</strong>.
+                              </small></span>
+                            </div>
+                          </form>
+
+                          <hr>
+
+                          <div class="header">
+                            <h5 class="title" id="receive-coins-wallet">Receive Tokens</h5>
+                          </div>
+
+                          <div class="input-group mb-3">
+                            <input id="input-pubkey" type="text" class="form-control" placeholder="Loading the wallet pubkey..." disabled>
+                          </div>
+
+                      </div>
+                    </div>
                 </div>
-                <input id="input-address" class="form-control" placeholder="Enter the address of recipient" required>
-              </div>
 
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Amount</span>
+
+              <div role="tabpanel" class="tab-pane fade" id="nav-wallet-spacecoin">
+                  <div class="panel panel-info" id="result_panel">
+                      <div class="panel-body">
+
+                        <hr>
+
+                        <div class="header">
+                          <h5 class="title" id="title-token-wallet">Your wallet for SPACE on the Spacecoin blockchain.</h5>
+                        </div>
+                        <hr>
+
+                        <div class="header">
+                          <h5 class="title" id="send-coins-wallet">Send SPACE</h5>
+                        </div>
+
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Balance</span>
+                          </div>
+                          <input id="balance" class="form-control" placeholder="Loading the amount..." disabled>
+                        </div>
+
+                        <hr>
+
+                        <form id='form-send'>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Address</span>
+                            </div>
+                            <input id="input-address" class="form-control" placeholder="Enter the address of recipient" required>
+                          </div>
+
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Amount</span>
+                            </div>
+                            <input id="input-amount" type="number" min="0" step="any" class="form-control" placeholder="Enter the amount you'll send" required>
+                          </div>
+
+                          <button id="button-send" class="btn btn-info" type="submit">Send</button>
+                        </form>
+
+                        <hr>
+
+                        <div class="header">
+                          <h5 class="title" id="receive-coins-wallet">Receive SPACE</h5>
+                        </div>
+
+                        <div class="input-group mb-3">
+                          <input id="text-new-address" type="text" class="form-control" placeholder="Loading the wallet address..." disabled>
+                          <div class="input-group-append">
+                            <button id="button-new-address" class="btn btn-outline-secondary" type="button">New Address</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <input id="input-amount" type="number" min="0" step="any" class="form-control" placeholder="Enter the amount you'll send" required>
-              </div>
-                
-              <button id="button-send" class="btn btn-info" type="submit">Send</button>
-            </form>
-
-            <hr>
-            
-
-
-            <div class="input-group mb-3">
-              <input id="text-new-address" type="text" class="form-control" placeholder="Loading the wallet address..." disabled>
-              <div class="input-group-append">
-                <button id="button-new-address" class="btn btn-outline-secondary" type="button">New Address</button>
-              </div>
             </div>
-            <div class="input-group mb-3"></div>
-              My tokens address <input id="myccaddress" type="text" class="form-control" placeholder="Loading the wallet address..." disabled>
-            </div>
-          </form>
+
+
+            <!-- Navbar 2 - TOKENS -->
+            <div id="tokens-page-only">
+
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#nav-tokens-list" role="tab" data-toggle="tab">Tokens List</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#nav-tokens-create" role="tab" data-toggle="tab">Create A Token</a>
+                </li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active show" id="nav-tokens-list">
+                    <div class="panel panel-info" id="result_panel">
+                        <div class="panel-body">
+                          <hr>
+                          <div class="header">
+                            <h5 class="title" id="title-list-tokens">A list of all tokens on the Spacecoin (SPACE) blockchain.</h5>
+                          </div>
+
+                        </div>
+                      </div>
+                  </div>
+
+
+                <div role="tabpanel" class="tab-pane fade" id="nav-tokens-create">
+                    <div class="panel panel-info" id="result_panel">
+                        <div class="panel-body">
+
+                          <hr>
+                          <!-- CREATE TOKEN -->
+                                <!-- Header -->
+                                <div class="form-header">
+                                  <h5 class="modal-title" id="title-create-token">Create a token on the Spacecoin (SPACE) blockchain.</h5>
+                                </div>
+                                <hr>
+                                <!-- Body -->
+                                <form id="form-create-token-submit">
+                                  <div class="form-body">
+                                    <div class="form-group">
+                                      <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">Name</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="input-create-token-name"  placeholder="A short name for the token, eg. TOK" required>
+                                      </div>
+                                      <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">Description</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="input-create-token-description" placeholder="Information about your token">
+                                      </div>
+                                      <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">Supply</span>
+                                        </div>
+                                        <input id="input-create-token-supply" type="number" min="0" step="any" class="form-control" placeholder="The amount you'll supply for this token, eg. 0.01" required>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- Footer -->
+                                  <div class="form-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button id="button-create-token-submit" type="submit" class="btn btn-info">Submit</button>
+                                  </div>
+                                </form>
+
+                              </div>
+                            </div>
+                          </div>
+              </div>
           </div>
-          
 
 
-
-
-
-
-
-          <!-- TRADE -->
+          <!-- Navbar 3 - TRADE -->
           <div id="trade-page-only">
-              
+
               <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active" href="#nav-trade-buy" role="tab" data-toggle="tab">Buy</a>
@@ -160,29 +276,29 @@
                 <li class="nav-item">
                   <a class="nav-link" href="#nav-trade-sell" role="tab" data-toggle="tab">Sell</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#nav-trade-orders" role="tab" data-toggle="tab">My Orders</a>
+                </li>
               </ul>
-              
+
               <!-- Tab panes -->
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active show" id="nav-trade-buy">
                     <div class="panel panel-info" id="result_panel">
                         <div class="panel-body">
-                            <button id="button-token-buy-order" type="button" class="btn btn-info my-2 my-sm-0" data-toggle="modal" data-target="#modal-token-buy-order">Create a buy order</button>  
-                            
-                            <h5>My buy orders:</h5>
-                            <table class="table table-sm">
-                              <thead>
-                                <tr>
-                                  <th scope="col">Name</th>
-                                  <th scope="col">Price / unit</th>
-                                  <th scope="col">Supply</th>
-                                  <th scope="col"></th>
-                                </tr>
-                              </thead>
-                              <tbody id="table-token-my-buy"></tbody>
-                            </table>
 
-                            <h5>Available sell orders:</h5>
+                          <hr>
+
+                          <div class="form-header">
+                            <h5 class="modal-title" id="title-create-token">Buy Tokens</h5>
+                            <p>Create a buy order or buy from the available sell orders.</p>
+                          </div>
+
+                          <hr>
+
+                            <button id="button-token-buy-order" type="button" class="btn btn-info my-2 my-sm-0" data-toggle="modal" data-target="#modal-token-buy-order">Create a buy order</button>
+
+                            <h5>Available Sell Orders:</h5>
                             <table class="table table-sm">
                               <thead>
                                 <tr>
@@ -202,22 +318,19 @@
                 <div role="tabpanel" class="tab-pane fade" id="nav-trade-sell">
                     <div class="panel panel-info" id="result_panel">
                         <div class="panel-body">
-                            <button id="button-token-sell-order" type="button" class="btn btn-success my-2 my-sm-0" data-toggle="modal" data-target="#modal-token-sell-order">Create a sell order</button>  
-                            
-                            <h5>My sell orders:</h5>
-                            <table class="table table-sm">
-                              <thead>
-                                <tr>
-                                  <th scope="col">Name</th>
-                                  <th scope="col">Price / unit</th>
-                                  <th scope="col">Supply</th>
-                                  <th scope="col"></th>
-                                </tr>
-                              </thead>
-                              <tbody id="table-token-my-sell"></tbody>
-                            </table>
 
-                            <h5>Available buy orders:</h5>
+                          <hr>
+
+                          <div class="form-header">
+                            <h5 class="modal-title" id="title-create-token">Sell Tokens</h5>
+                            <p>Create a sell order or sell to the available buy orders.</p>
+                          </div>
+
+                          <hr>
+
+                            <button id="button-token-sell-order" type="button" class="btn btn-success my-2 my-sm-0" data-toggle="modal" data-target="#modal-token-sell-order">Create a sell order</button>
+
+                            <h5>Available Buy Orders:</h5>
                             <table class="table table-sm">
                               <thead>
                                 <tr>
@@ -233,29 +346,86 @@
                         </div>
                     </div>
                 </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="nav-trade-orders">
+                    <div class="panel panel-info" id="result_panel">
+                        <div class="panel-body">
+
+                            <hr>
+
+                            <div class="form-header">
+                              <h5 class="modal-title" id="title-create-token">Open Orders</h5>
+                            </div>
+
+                            <hr>
+
+                            <h5>Buy Orders</h5>
+                            <table class="table table-sm">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Price / unit</th>
+                                  <th scope="col">Supply</th>
+                                  <th scope="col"></th>
+                                </tr>
+                              </thead>
+                              <tbody id="table-token-my-buy"></tbody>
+                            </table>
+
+                            <hr>
+
+                            <h5>Sell Orders</h5>
+                            <table class="table table-sm">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Price / unit</th>
+                                  <th scope="col">Supply</th>
+                                  <th scope="col"></th>
+                                </tr>
+                              </thead>
+                              <tbody id="table-token-my-sell"></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
               </div>
           </div>
 
 
+          <!-- Navbar 4 - History -->
+          <div id="history-page-only">
+
+                  <hr>
+
+                  <!-- Transaction History -->
+                  <label for="textarea-history">App History</label>
+                  <textarea class="form-control" id="textarea-history" rows="26" disabled="true"></textarea>
+
+          </div>
+
+          <!-- Navbar 5 - Settings -->
+          <div id="settings-page-only">
+
+                  <hr>
+
+                  <button id="button-show-keys" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-show-keys">Show keys</button>
+
+                  <hr>
+
+                  <button id="button-change-pubkey" type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-change-pubkey">Change Public key</button>
+
+          </div>
+
+        </div>
 
 
 
 
-          <hr>
-          
 
 
-
-          <!-- COMMON -->
-          <label for="textarea-history">Transaction history</label>
-          <textarea class="form-control" id="textarea-history" rows="4" disabled="true"></textarea>
-
-
-
-
-
-
-          
 
 
 
@@ -279,10 +449,10 @@
                         </div>
                         <input type="password" class="form-control" id="input-password" placeholder="">
                         <div class="input-group-append">
-                          <button id="button-enter-password-show" type="button" class="btn btn-success my-2 my-sm-0"></button>  
+                          <button id="button-enter-password-show" type="button" class="btn btn-success my-2 my-sm-0"></button>
                         </div>
                         <div id="div-enter-password-edit" class="input-group-append">
-                          <button id="button-enter-password-edit" type="button" class="btn btn-secondary my-2 my-sm-0">Edit</button>  
+                          <button id="button-enter-password-edit" type="button" class="btn btn-secondary my-2 my-sm-0">Edit</button>
                         </div>
                         <small id="text-enter-password-small" class="form-text text-muted"></small>
                       </div>
@@ -362,7 +532,7 @@
                   Keep these somewhere safe.
 
                   <hr>
-                  
+
                   <div class="form-group">
                     <label><strong>First</strong> generated key pair</label>
 
@@ -372,7 +542,7 @@
                       </div>
                       <input type="text" class="form-control" id="text-first-privkey" disabled>
                     </div>
-                    
+
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Public</span>
@@ -380,7 +550,7 @@
                       <input type="text" class="form-control" id="text-first-pubkey" disabled>
                     </div>
                   </div>
-                  
+
                   <hr>
 
                   <div class="form-group">
@@ -625,7 +795,7 @@
                 <div class="modal-body text-center">
                   <div class="loader"></div>
                   <div>
-                    <p id="loader-txt"></p> 
+                    <p id="loader-txt"></p>
                     <small>Please wait...</small>
                   </div>
                 </div>
@@ -640,6 +810,8 @@
     </div>
 
 
-    <script src="./renderer.js"></script>
+    <script>
+      require('./renderer.js')
+    </script>
   </body>
 </html>

@@ -1,11 +1,11 @@
 'use strict'
 
-window.$ = window.jQuery = require('jquery')
-window.Bootstrap = require('bootstrap')
+window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js')
+window.Bootstrap = require('./node_modules/bootstrap/dist/js/bootstrap.js')
 
-////// SET PAGES 
+////// SET PAGES
 // Main pages
-let pages = ['wallet', 'tokens', 'trade']
+let pages = ['wallet', 'tokens', 'trade', 'history', 'settings']
 
 // Launch with the first page
 openPage(pages[0])
@@ -53,7 +53,7 @@ function setLoading(toggle) {
 let exitInitialized = false
 mainWindow.on('close', e => {
     if(preventWindowClose || loading) {
-        e.preventDefault() // Prevents the window from closing 
+        e.preventDefault() // Prevents the window from closing
         console.log('Prevented close request! loading: ' + loading)
 
         // Prevent spam click, don't enter this if it's just loading
@@ -147,9 +147,9 @@ function stopUpdateIntervals() {
 function firstLaunch() {
     // Initialize with the saved pubkey
     init(store.get('pubkey')).then(() => {
-        // Disable window close, require 
+        // Disable window close, require
         setPreventWindowClose(true)
-        
+
         startUpdateIntervals()
     })
 
@@ -211,7 +211,7 @@ function tryEncrypt(password) {
             resolve('skip_encryption')
         })
     }
-    
+
     return safe.encryptFile().then(d => {
         return d
     }).catch(e => {
@@ -219,7 +219,7 @@ function tryEncrypt(password) {
     })
 }
 
-function hidePassword() {    
+function hidePassword() {
     $('#input-password').attr("type", "password")
     $('#button-enter-password-show').html('Show')
 }
@@ -229,8 +229,8 @@ $('#button-enter-password-show').on('click', function() {
     event.preventDefault()
 
     let pass = $('#input-password')
-    
-    let type = pass.attr("type") 
+
+    let type = pass.attr("type")
 
     if(type === 'password'){
         pass.attr("type", "text")
@@ -242,7 +242,7 @@ $('#button-enter-password-show').on('click', function() {
 // Toggle password edit
 $('#button-enter-password-edit').click(event => {
     event.preventDefault()
-    
+
     $('#input-password').attr('disabled', !$('#input-password').attr('disabled'))
 })
 
@@ -264,20 +264,20 @@ function promptPasswordScreen(type) {
 
         $('#div-enter-password-edit').show()
     }
-    
+
     $('#button-submit-password').attr('data-action', type)
     $('#input-password').attr('placeholder', 'Enter password to ' + type + ' the wallet.')
     $('#modal-enter-password').modal({ backdrop: 'static', keyboard: false })
 }
 
 $('#form-submit-password').submit(event => {
-    // TODO: Validate inputs 
+    // TODO: Validate inputs
     let password = $('#input-password').val()
     let action = $('#button-submit-password').attr('data-action')
 
     // Hide the error
     $("#status-alert-password").hide()
-    
+
     // Try decrypting
     if(action === 'decrypt') {
         tryDecrypt(password).then(result => {
@@ -298,7 +298,7 @@ $('#form-submit-password').submit(event => {
         tryEncrypt(password).then(result => {
             console.log(result)
             setPreventWindowClose(false)
-            
+
             mainWindow.close()
         })
     }
@@ -311,7 +311,7 @@ function init(pubkey) {
     return new Promise((resolve, reject) => {
         inputLock(true, 'Preparing the daemon.')
 
-        // Launch daemon 
+        // Launch daemon
         daemon.startUp(pubkey).then(wallet => {
             // Store the key
             store.set('pubkey', wallet.pubkey)
@@ -344,10 +344,10 @@ function init(pubkey) {
             ]).then(() => {
                 // Unlock input
                 inputLock(false)
-                
+
                 resolve()
             })
-        }) 
+        })
     })
 }
 
@@ -357,11 +357,11 @@ $('.alert .close').on('click', function(e) {
     $(this).parent().hide()
 })
 
-$('#form-send').submit(event => {    
+$('#form-send').submit(event => {
     let address = $('#input-address').val()
     let amount = parseFloat($('#input-amount').val())
-    
-    // Validate inputs 
+
+    // Validate inputs
     if(parseFloat(amount) === 0) {
         statusAlert(false, 'Failed to send: Amount can\'t be zero.')
         return false
@@ -398,8 +398,8 @@ $('#form-token-send').submit(event => {
     let amount = parseInt($('#input-token-amount').val())
 
     let line_arr = token_line.split(' ')
-    let token_name = line_arr[0] 
-    let token_balance = line_arr[line_arr.length-1] 
+    let token_name = line_arr[0]
+    let token_balance = line_arr[line_arr.length-1]
 
     // Validate inputs
     if(token_balance < amount) {
@@ -410,8 +410,8 @@ $('#form-token-send').submit(event => {
     // Send to address
     daemon.sendTokenToAddress(token_id, address, amount).then(txid => {
         // Add it to transaction history
-        let transaction_text = addTransactionToHistory(address, amount, token_name, 
-                                            '\nTransaction ID: ' + txid) 
+        let transaction_text = addTransactionToHistory(address, amount, token_name,
+                                            '\nTransaction ID: ' + txid)
 
         // Update status text
         statusAlert(true, transaction_text)
@@ -424,7 +424,7 @@ $('#form-token-send').submit(event => {
 
 function statusAlert(success, text) {
     $('#status-text').html(text)
-    
+
     if(success) {
         // Remove danger
         $("#status-alert").removeClass("alert-danger")
@@ -451,7 +451,7 @@ function addTransactionToHistory(address, amount, asset_name, extra='') {
     let transaction_text = 'Sent ' + amount + ' ' + asset_name + ' to ' + address + ' ' + extra;
 
     addToHistory(transaction_text)
-    
+
     return transaction_text
 }
 
@@ -459,9 +459,9 @@ function addToHistory(text) {
     // Add timestamp
     var time = new Date().toTimeString().substr(0, 8)
     text = time + ' - ' + text
-    
+
     let thistory = $('#textarea-history')
-    
+
     let curr_text = thistory.val()
     thistory.val(curr_text + (curr_text === '' ? '' : '\n') + text)
 
@@ -482,20 +482,13 @@ $('#button-show-keys').click(event => {
     $('#text-last-pubkey').val(store.get('generated_pubkey'))
 })
 
-$('#button-import-keys').click(event => {
-  event.preventDefault()
 
-  daemon.forceImportKey({
-    privkey: store.data.first_privkey,
-    pubkey: store.data.pubkey,
-  });
-})
 
 
 $('#button-change-pubkey').click(event => {
     event.preventDefault()
 
-    // TODO: Validate inputs 
+    // TODO: Validate inputs
     $('#input-pubkey').val(daemon.getKeyPair().pubkey)
 })
 
@@ -507,7 +500,7 @@ $('#form-save-pubkey').submit(event => {
 
     // Check if it's correct size
     if(new_pubkey.length !== 0 && new_pubkey.length !== 66) {
-        statusAlert(false, 'Failed to change Public key: It should be 66 bytes.') 
+        statusAlert(false, 'Failed to change Public key: It should be 66 bytes.')
         return false
     }
 
@@ -515,7 +508,7 @@ $('#form-save-pubkey').submit(event => {
     if(new_pubkey.length !== 0) {
         let first_two_chars = new_pubkey.slice(0, 2)
         if(first_two_chars !== '02' && first_two_chars !== '03') {
-            statusAlert(false, 'Failed to change Public key: Invalid format, it should start with 02 or 03.') 
+            statusAlert(false, 'Failed to change Public key: Invalid format, it should start with 02 or 03.')
             return false
         }
     }
@@ -535,11 +528,11 @@ $('#form-save-pubkey').submit(event => {
 
 $('#button-new-address').click(event => {
     event.preventDefault()
-    
+
     // Get a new address
     daemon.getNewAddress().then(address => {
         updateNewAddress(address)
-        
+
         statusAlert(true, addToHistory('Generated a new address: ' + address))
     }).catch(e => {
         statusAlert(false, 'Could not generate new address: ' + e)
@@ -557,12 +550,12 @@ $('#form-create-token-submit').submit(event => {
     let supply = parseInt($('#input-create-token-supply').val())
     let description = $('#input-create-token-description').val()
 
-    // Validate inputs 
+    // Validate inputs
     if(parseFloat(supply) === 0) {
         statusAlert(false, 'Failed to create token: Supply can\'t be zero.')
         return false
     }
-    
+
     if(name.indexOf(' ') !== -1) {
         statusAlert(false, 'Failed to create token: Name can\'t have spaces.')
         return false
@@ -570,13 +563,13 @@ $('#form-create-token-submit').submit(event => {
 
     // Create token
     daemon.createToken(name, supply, description).then((createTokenTxid) => {
-        statusAlert(true, 'Created token ' + name + 
+        statusAlert(true, 'Created token ' + name +
                                 (description !== '' ? ('(' + description + ')') : '')
                                 + ' with ' +  supply + ' ' + daemon.getCoinName() + '\nTransaction ID: <a href="#" id="txid-link">' + createTokenTxid + '</a>')
         $('#txid-link').on('click', function(e) {
-          openExtLink('http://www.atomicexplorer.com:10026/#/tokens/contract/' + daemon.chainName + '/' + createTokenTxid);
+          openExtLink('http://www.atomicexplorer.com:10026/#/tokens/contract/RICK/' + createTokenTxid);
         })
-        addToHistory('Created token ' + name + 
+        addToHistory('Created token ' + name +
         (description !== '' ? ('(' + description + ')') : '')
         + ' with ' +  supply + ' ' + daemon.getCoinName() + '\nTransaction ID: ' + createTokenTxid)
     }).catch(e => {
@@ -594,14 +587,14 @@ actions.forEach(action => {
     $('#form-token-' + action + '-order-submit').submit(event => {
         // Close the modal
         $('#modal-token-' + action +'-order').modal('hide')
-    
-        let selected = $('option:selected', $('#select-token-' + action + '-order')) 
+
+        let selected = $('option:selected', $('#select-token-' + action + '-order'))
 
         let tokenid = $('#select-token-' + action + '-order').val()
         let token_balance = parseInt(selected.attr('data-balance'))
         let price = parseFloat($('#input-token-' + action + '-order-price').val())
         let supply = parseInt($('#input-token-' + action + '-order-supply').val())
-        
+
         let name = selected.attr('data-name')
 
         // Validate inputs
@@ -609,7 +602,7 @@ actions.forEach(action => {
             statusAlert(false, 'Failed to create ' + action + ' order: Price can\'t be zero.')
             return false
         }
-        
+
         if(action === 'sell' && supply > token_balance) {
             statusAlert(false, 'Failed to create sell order: Not enough tokens.')
             return false
@@ -623,15 +616,15 @@ actions.forEach(action => {
                 return false
             }
         }
-        
+
         // Create token
-        daemon.createTokenTradeOrder(action, supply, tokenid, price).then((sellTokenOrderTxid) => {            
+        daemon.createTokenTradeOrder(action, supply, tokenid, price).then((sellTokenOrderTxid) => {
             statusAlert(true, 'Created token order, ' + action + 'ing ' + supply + ' ' + name +
             ' for ' + stripZeros(price) + ' ' + daemon.getCoinName() + ' each. \nTransaction ID: <a href="#" id="txid-link">' + sellTokenOrderTxid + '</a>')
             addToHistory('Created token order, ' + action + 'ing ' + supply + ' ' + name +
             ' for ' + stripZeros(price) + ' ' + daemon.getCoinName() + ' each. \nTransaction ID: ' + sellTokenOrderTxid)
             $('#txid-link').on('click', function(e) {
-              openExtLink('http://www.atomicexplorer.com:10026/#/tokens/transaction/' + daemon.chainName + '/' + tokenid + '/' + sellTokenOrderTxid);
+              openExtLink('http://www.atomicexplorer.com:10026/#/tokens/transaction/RICK/' + tokenid + '/' + sellTokenOrderTxid);
             })
         }).catch(e => {
             statusAlert(false, 'Could not create token trade order: ' + e)
@@ -694,7 +687,7 @@ function updateTokenLists() {
             // Add new ones
             for(var i = 0; i < list.length; ++i) {
                 $(s).append('<option value="' + list[i].id + '" data-balance="' + list[i].balance + '"' +
-                ' data-name="' + list[i].name + '">' + 
+                ' data-name="' + list[i].name + '">' +
                                 list[i].name + ' - ' + list[i].balance + '</option>')
             }
 
@@ -714,7 +707,7 @@ function updateTokenOrders() {
         $('#table-token-sell').children().remove()
         $('#table-token-my-buy').children().remove()
         $('#table-token-my-sell').children().remove()
-        
+
         let my_address = daemon.getKeyPair().CCaddress
 
 
@@ -727,7 +720,7 @@ function updateTokenOrders() {
             // Reverse, because if you wanna buy, you look at sell-list
             order.action = buy ? 'sell' : sell ? 'buy' : 'unknown-func'
 
-            
+
             // Available token order tables
             order.real_amount = buy ? order.totalrequired : sell ? order.amount : 'unknown'
             $('#table-token-' + order.action).append(`
@@ -735,9 +728,9 @@ function updateTokenOrders() {
                     <td>${order.name}</td>
                     <td>${stripZeros(order.price) + ' ' + daemon.getCoinName()}</td>
                     <td>${order.real_amount}</td>
-                    <td><button data-toggle="modal" data-target="#modal-token-fill-order" 
-                                data-action="${order.action}" 
-                                data-name="${order.name}" 
+                    <td><button data-toggle="modal" data-target="#modal-token-fill-order"
+                                data-action="${order.action}"
+                                data-name="${order.name}"
                                 data-price="${order.price}"
                                 data-amount="${order.real_amount}"
                                 data-tokenid="${order.tokenid}"
@@ -748,23 +741,23 @@ function updateTokenOrders() {
 
 
             // If it's my order, add them to the my orders tables
-            // console.warn('my address ' + my_address + ' vs order address ' + order.origaddress + ', order id: ' + order.txid);
+            console.warn('my address ' + my_address + ' vs order address ' + order.origaddress + ', order id: ' + order.txid);
             if(order.isMine) {
                 $('#table-token-my-' + (buy ? 'buy' : sell ? 'sell' : 'unknown-func')).append(`
                     <tr>
                         <td>${order.name}</td>
                         <td>${stripZeros(order.price) + ' ' + daemon.getCoinName()}</td>
                         <td>${order.real_amount}</td>
-                        <td><button 
-                            data-type="${buy ? 'bid' : 'ask'}" 
-                            data-name="${order.name}" 
+                        <td><button
+                            data-type="${buy ? 'bid' : 'ask'}"
+                            data-name="${order.name}"
                             data-price="${order.price}"
-                            data-amount="${order.real_amount}" 
-                            data-tokenid="${order.tokenid}" 
+                            data-amount="${order.real_amount}"
+                            data-tokenid="${order.tokenid}"
                             data-txid="${order.txid}"
                             class="button-token-cancel-order btn btn-success btn-sm">Cancel</button></td>
                     </tr>
-                `)            
+                `)
             }
         }
     })
@@ -778,19 +771,19 @@ $(document).on('click', '.button-token-cancel-order', function() {
     let name = btn.attr("data-name")
     let price = parseFloat(btn.attr("data-price"))
     let amount = parseInt(btn.attr("data-amount")) // Supply
-    let type = btn.attr("data-type") 
+    let type = btn.attr("data-type")
     let tokenid = btn.attr("data-tokenid")
     let txid = btn.attr("data-txid")
 
     daemon.cancelTokenOrder(type, tokenid, txid).then(cancel_order_id => {
-        statusAlert(true, addToHistory('Cancelling token order: "' + (type === 'ask' ? 'Sell' : 'Buy') + ' ' + 
+        statusAlert(true, addToHistory('Cancelling token order: "' + (type === 'ask' ? 'Sell' : 'Buy') + ' ' +
                     amount + ' ' + name + ' for ' + stripZeros(price) + ' ' + daemon.getCoinName() + ' each."' +
-                                        '\nTokenID: ' + tokenid + 
-                                        '\nOrder ID: ' + txid + 
+                                        '\nTokenID: ' + tokenid +
+                                        '\nOrder ID: ' + txid +
                                         '\nCancel Order ID: ' + cancel_order_id))
     }).catch(e => {
         // Unknown error, no message
-        if(e.indexOf('error code: -25') !== -1 || e.indexOf('error code: -26') !== -1) 
+        if(e.indexOf('error code: -25') !== -1 || e.indexOf('error code: -26') !== -1)
             e = 'Failed to cancel token order: Unknown reason. If you tried cancelling it before, please wait, it might take a while.'
 
         statusAlert(false, e)
@@ -810,7 +803,7 @@ $(document).on('click', '.button-token-fill-order', function() {
     let amount = btn.attr("data-amount")
     let tokenid = btn.attr("data-tokenid")
     let txid = btn.attr("data-txid")
-    
+
     $('#text-token-fill-order-action').html((action === 'buy' ? 'Buy' : 'Sell') + 'ing Token')
     $('#text-token-fill-order-name').val(name)
     $('#input-token-fill-order-price').val(stripZeros(price) + ' ' + daemon.getCoinName())
@@ -843,11 +836,11 @@ $('#form-token-fill-order-submit').submit(event => {
 
     let count = parseInt($('#input-token-fill-order-fill-count').val()) // User count input
 
-    // Validate inputs 
+    // Validate inputs
     if(amount < count) {
         if(action === 'buy')
             statusAlert(false, 'Failed to buy tokens: Supply is less than what you want to buy.')
-        else if(action === 'sell') 
+        else if(action === 'sell')
             statusAlert(false, 'Failed to sell tokens: Asked amount is less than what you want to sell.')
 
         return false
@@ -864,18 +857,18 @@ $('#form-token-fill-order-submit').submit(event => {
 
     daemon.fillTokenOrder(action, tokenid, txid, count).then(fill_order_id => {
         // Update status text
-        statusAlert(true, 'Filling token order, ' + action + 'ing ' + 
+        statusAlert(true, 'Filling token order, ' + action + 'ing ' +
                                 count + ' ' + name + ' for ' + stripZeros(price) + ' ' + daemon.getCoinName() + ' each.' +
-                                        '\nTokenID: ' + tokenid + 
-                                        '\nOrder ID: ' + txid + 
+                                        '\nTokenID: ' + tokenid +
+                                        '\nOrder ID: ' + txid +
                                         '\nFill Order ID: <a href="#" id="txid-link">' + fill_order_id + '</a>')
-        addToHistory('Filling token order, ' + action + 'ing ' + 
+        addToHistory('Filling token order, ' + action + 'ing ' +
           count + ' ' + name + ' for ' + stripZeros(price) + ' ' + daemon.getCoinName() + ' each.' +
-                  '\nTokenID: ' + tokenid + 
-                  '\nOrder ID: ' + txid + 
+                  '\nTokenID: ' + tokenid +
+                  '\nOrder ID: ' + txid +
                   '\nFill Order ID: ' + fill_order_id)
         $('#txid-link').on('click', function(e) {
-          openExtLink('http://www.atomicexplorer.com:10026/#/tokens/transactions/' + daemon.chainName + '/' + tokenid);
+          openExtLink('http://www.atomicexplorer.com:10026/#/tokens/transactions/RICK/' + tokenid);
         })
     }).catch(e => {
         statusAlert(false, e)

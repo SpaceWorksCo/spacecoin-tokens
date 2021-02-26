@@ -75,7 +75,7 @@ body {
   line-height: 1.5;
   color: #839496;
   text-align: left;
-  background-color: #002B36;
+  background-color: #1c1d26;
 }
 
 [tabindex="-1"]:focus {
@@ -4190,7 +4190,7 @@ input[type="button"].btn-block {
 }
 
 .nav-link.disabled {
-  color: #839496;
+  color: #262732;
 }
 
 .nav-tabs {
@@ -4212,7 +4212,7 @@ input[type="button"].btn-block {
 }
 
 .nav-tabs .nav-link.disabled {
-  color: #839496;
+  color: #262732;
   background-color: transparent;
   border-color: transparent;
 }
@@ -4220,7 +4220,7 @@ input[type="button"].btn-block {
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: rgba(255, 255, 255, 0.75);
-  background-color: #002B36;
+  background-color: #262732;
   border-color: #073642;
 }
 
