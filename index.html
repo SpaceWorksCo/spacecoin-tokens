@@ -73,7 +73,7 @@
                       <div class="panel-body">
                         <hr>
                         <div class="header">
-                          <h5 class="title" id="title-token-wallet">Your wallet for tokens on the Spacecoin blockchain.</h5>
+                          <h5 class="title" id="title-token-wallet">Your tokens wallet.</h5>
                         </div>
                         <hr>
 
@@ -86,9 +86,6 @@
                                 <label class="input-group-text" for="select-tokens">Token</label>
                               </div>
                               <select class="custom-select" id="select-tokens"></select>
-                              <div class="input-group-append">
-                                <button id="button-token-create" type="button" class="btn btn-outline-secondary my-2 my-sm-0" data-toggle="modal" data-target="#modal-create-token">Create</button>
-                              </div>
                             </div>
                           <hr>
                           <form id="form-token-send">
@@ -96,14 +93,14 @@
                               <div class="input-group-prepend">
                                 <span class="input-group-text">Pubkey</span>
                               </div>
-                              <input id="input-token-address" class="form-control" placeholder="Enter the pubkey of recipient" required>
+                              <input id="input-token-address" class="form-control" placeholder="Enter the pubkey of the recipient." required>
                             </div>
 
                             <div class="input-group mb-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">Amount</span>
                               </div>
-                              <input id="input-token-amount" type="number" min="1" step="1" class="form-control" placeholder="Enter the amount you'll send" required>
+                              <input id="input-token-amount" type="number" min="1" step="1" class="form-control" placeholder="Enter the amount to send." required>
                             </div>
 
                             <div style="display: flex;">
@@ -136,7 +133,7 @@
                         <hr>
 
                         <div class="header">
-                          <h5 class="title" id="title-token-wallet">Your wallet for SPACE on the Spacecoin blockchain.</h5>
+                          <h5 class="title" id="title-token-wallet">Your SPACE wallet.</h5>
                         </div>
                         <hr>
 
@@ -158,14 +155,14 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text">Address</span>
                             </div>
-                            <input id="input-address" class="form-control" placeholder="Enter the address of recipient" required>
+                            <input id="input-address" class="form-control" placeholder="Enter the address of the recipient." required>
                           </div>
 
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text">Amount</span>
                             </div>
-                            <input id="input-amount" type="number" min="0" step="any" class="form-control" placeholder="Enter the amount you'll send" required>
+                            <input id="input-amount" type="number" min="0" step="any" class="form-control" placeholder="Enter the amount to send." required>
                           </div>
 
                           <button id="button-send" class="btn btn-info" type="submit">Send</button>

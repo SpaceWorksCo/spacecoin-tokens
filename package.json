@@ -1,7 +1,7 @@
 {
-  "name": "kmd-tokens-wallet",
-  "version": "0.0.2",
-  "description": "Tokens CC Wallet",
+  "name": "Spacecoin-Tokens",
+  "version": "0.0.3",
+  "description": "Tokens Wallet",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -11,13 +11,16 @@
     "dist-win": "electron-builder --publish=never  --win"
   },
   "keywords": [
-    "KMD",
-    "SEC",
+    "Spacecoin",
+    "SPACE",
+    "token",
+    "tokens",
+    "NFT",
+    "wallet",
+    "cc",
     "GUI",
     "Komodo",
-    "Securities",
-    "token",
-    "wallet"
+    "Securities"
   ],
   "author": "Komodo Platform",
   "devDependencies": {
