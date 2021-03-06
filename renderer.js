@@ -771,6 +771,18 @@ function updateTokenOrders() {
  */
 async function renderFullTokenTable() {
     let tokens = await daemon.getTokenList();
+    // We have been triggered for an update, so we need to remove all from the table and then re-append
+    $('#table-token-list-full').children().remove()
+    tokens.forEach(token => {
+        $('#table-token-list-full').append(`
+                <tr>
+                    <td>${token.name}</td>
+                    <td>${token.description}</td>
+                    <td>${token.supply}</td>
+                    <td>${token.owner}</td>
+                </tr>
+            `)
+    })
     console.log(tokens);
 }
 
