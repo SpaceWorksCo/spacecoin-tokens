@@ -152,6 +152,8 @@ function firstLaunch() {
         setPreventWindowClose(true)
 
         startUpdateIntervals()
+        // Getting the "Receive token address"
+        $('#input-pubkey').val(daemon.getKeyPair().pubkey)
     })
 
 }
@@ -783,7 +785,7 @@ async function renderFullTokenTable() {
                 </tr>
             `)
     })
-    console.log(tokens);
+    // TODO: Strip the length of the owner address
 }
 
 
