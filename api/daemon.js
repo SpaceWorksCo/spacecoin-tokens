@@ -131,7 +131,7 @@ function launchDaemon(pubkey) {
         ++daemon_count
 
         komodod.stdout.on('data', data => {
-            console.log(' komodod ' + daemon_count + ' stdout: ' + data)
+            // console.log(' komodod ' + daemon_count + ' stdout: ' + data) // Remove this if the logging is too verbose
 
 
             // If it's already open
@@ -270,7 +270,7 @@ function getTokenList() {
             }
 
             if(stdout) {
-                let tokens = JSON.parse(stdout)
+                let tokens = JSON.parse(stdout);
 
                 tokens.forEach((tok, i, arr) => {
                     arr[i] = { id: tok }
@@ -281,11 +281,20 @@ function getTokenList() {
                     return new Promise((resolve, reject) => {
                         // Get name and balance
                         Promise.all([
-                            getTokenName(t.id).then(name => { t.name = name; }),
-                            getTokenBalance(t.id).then(balance => { t.balance = balance; })
-                        ]).then(() => { resolve() })
+                            getTokenName(t.id).then(name => {
+                                t.name = name;
+                            }),
+                            getTokenBalance(t.id).then(balance => {
+                                t.balance = balance;
+                            })
+                        ]).then(() => {
+                            resolve()
+                        })
                     })
-                })).then(() => { resolve(tokens) })
+                })).then(() => {
+                    resolve(tokens)
+                })
+                console.log(tokens);
             }
 
         })

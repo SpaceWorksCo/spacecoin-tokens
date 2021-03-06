@@ -702,6 +702,7 @@ function updateTokenLists() {
 // Update token list
 function updateTokenOrders() {
     return daemon.getTokenOrders().then(list => {
+        console.log(list);
         // Remove all
         $('#table-token-buy').children().remove()
         $('#table-token-sell').children().remove()
@@ -763,9 +764,13 @@ function updateTokenOrders() {
     })
 }
 
+function renderFullTokenTable() {
+    return false;
+}
+
 
 // Remove order
-$(document).on('click', '.button-token-cancel-order', function() {
+$(document).on('click', '.button-token-cancel-order', function () {
     let btn = $(this)
 
     let name = btn.attr("data-name")
