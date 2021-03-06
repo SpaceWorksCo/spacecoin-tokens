@@ -131,7 +131,7 @@ function launchDaemon(pubkey) {
         ++daemon_count
 
         komodod.stdout.on('data', data => {
-            console.log(' komodod ' + daemon_count + ' stdout: ' + data)
+            // console.log(' komodod ' + daemon_count + ' stdout: ' + data) // Remove this if the logging is too verbose
 
 
             // If it's already open
@@ -251,8 +251,59 @@ function getTokenName(id) {
                 reject(stderr)
             }
 
-            if(stdout) {
+            if (stdout) {
                 resolve(JSON.parse(stdout).name)
+            }
+
+        })
+    })
+}
+
+function getTokenOwner(id) {
+    return new Promise((resolve, reject) => {
+        child_process.execFile(cli_path, to_cli_args('tokeninfo ' + id), (error, stdout, stderr) => {
+
+            if (stderr) {
+                console.log('getTokenName failed: ', stderr)
+                reject(stderr)
+            }
+
+            if (stdout) {
+                resolve(JSON.parse(stdout).owner)
+            }
+
+        })
+    })
+}
+
+function getTokenDescription(id) {
+    return new Promise((resolve, reject) => {
+        child_process.execFile(cli_path, to_cli_args('tokeninfo ' + id), (error, stdout, stderr) => {
+
+            if (stderr) {
+                console.log('getTokenName failed: ', stderr)
+                reject(stderr)
+            }
+
+            if (stdout) {
+                resolve(JSON.parse(stdout).description)
+            }
+
+        })
+    })
+}
+
+function getTokenMaxSupply(id) {
+    return new Promise((resolve, reject) => {
+        child_process.execFile(cli_path, to_cli_args('tokeninfo ' + id), (error, stdout, stderr) => {
+
+            if (stderr) {
+                console.log('getTokenName failed: ', stderr)
+                reject(stderr)
+            }
+
+            if (stdout) {
+                resolve(JSON.parse(stdout).supply)
             }
 
         })
@@ -264,13 +315,13 @@ function getTokenList() {
     return new Promise((resolve, reject) => {
         child_process.execFile(cli_path, to_cli_args('tokenlist'), (error, stdout, stderr) => {
 
-            if(stderr) {
+            if (stderr) {
                 console.log('getTokenList failed: ', stderr)
                 reject(stderr)
             }
 
             if(stdout) {
-                let tokens = JSON.parse(stdout)
+                let tokens = JSON.parse(stdout);
 
                 tokens.forEach((tok, i, arr) => {
                     arr[i] = { id: tok }
@@ -281,11 +332,28 @@ function getTokenList() {
                     return new Promise((resolve, reject) => {
                         // Get name and balance
                         Promise.all([
-                            getTokenName(t.id).then(name => { t.name = name; }),
-                            getTokenBalance(t.id).then(balance => { t.balance = balance; })
-                        ]).then(() => { resolve() })
+                            getTokenName(t.id).then(name => {
+                                t.name = name;
+                            }),
+                            getTokenBalance(t.id).then(balance => {
+                                t.balance = balance;
+                            }),
+                            getTokenDescription(t.id).then(description => {
+                                t.description = description;
+                            }),
+                            getTokenOwner(t.id).then(owner => {
+                                t.owner = owner;
+                            }),
+                            getTokenMaxSupply(t.id).then(supply => {
+                                t.supply = supply;
+                            })
+                        ]).then(() => {
+                            resolve()
+                        })
                     })
-                })).then(() => { resolve(tokens) })
+                })).then(() => {
+                    resolve(tokens)
+                })
             }
 
         })

@@ -137,6 +137,7 @@ function startUpdateIntervals() {
     updateIntervals.push(setInterval(() => updateBalance(), 1000))
     updateIntervals.push(setInterval(() => updateTokenLists(), 5000))
     updateIntervals.push(setInterval(() => updateTokenOrders(), 5000))
+    updateIntervals.push(setInterval(() => renderFullTokenTable(), 5000))
 }
 
 function stopUpdateIntervals() {
@@ -151,6 +152,8 @@ function firstLaunch() {
         setPreventWindowClose(true)
 
         startUpdateIntervals()
+        // Getting the "Receive token address"
+        $('#input-pubkey').val(daemon.getKeyPair().pubkey)
     })
 
 }
@@ -702,6 +705,7 @@ function updateTokenLists() {
 // Update token list
 function updateTokenOrders() {
     return daemon.getTokenOrders().then(list => {
+        console.log(list);
         // Remove all
         $('#table-token-buy').children().remove()
         $('#table-token-sell').children().remove()
@@ -763,9 +767,30 @@ function updateTokenOrders() {
     })
 }
 
+/**
+ *  This function render the complete list of
+ *  tokens available in the SPACE ecosystem.
+ */
+async function renderFullTokenTable() {
+    let tokens = await daemon.getTokenList();
+    // We have been triggered for an update, so we need to remove all from the table and then re-append
+    $('#table-token-list-full').children().remove()
+    tokens.forEach(token => {
+        $('#table-token-list-full').append(`
+                <tr>
+                    <td>${token.name}</td>
+                    <td>${token.description}</td>
+                    <td>${token.supply}</td>
+                    <td>${token.owner}</td>
+                </tr>
+            `)
+    })
+    // TODO: Strip the length of the owner address
+}
+
 
 // Remove order
-$(document).on('click', '.button-token-cancel-order', function() {
+$(document).on('click', '.button-token-cancel-order', function () {
     let btn = $(this)
 
     let name = btn.attr("data-name")
