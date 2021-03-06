@@ -354,7 +354,6 @@ function getTokenList() {
                 })).then(() => {
                     resolve(tokens)
                 })
-                console.log(tokens);
             }
 
         })
