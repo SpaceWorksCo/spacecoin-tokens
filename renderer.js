@@ -137,6 +137,7 @@ function startUpdateIntervals() {
     updateIntervals.push(setInterval(() => updateBalance(), 1000))
     updateIntervals.push(setInterval(() => updateTokenLists(), 5000))
     updateIntervals.push(setInterval(() => updateTokenOrders(), 5000))
+    updateIntervals.push(setInterval(() => renderFullTokenTable(), 5000))
 }
 
 function stopUpdateIntervals() {
@@ -764,8 +765,13 @@ function updateTokenOrders() {
     })
 }
 
-function renderFullTokenTable() {
-    return false;
+/**
+ *  This function render the complete list of
+ *  tokens available in the SPACE ecosystem.
+ */
+async function renderFullTokenTable() {
+    let tokens = await daemon.getTokenList();
+    console.log(tokens);
 }
 
 
