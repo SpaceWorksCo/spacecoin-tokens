@@ -135,8 +135,8 @@ function launchDaemon(pubkey) {
 
 
             // If it's already open
-            if(data.indexOf('Komodo is probably already running') !== -1) {
-                reject('Komodo is probably already running')
+            if(data.indexOf('Spacecoin is probably already running') !== -1) {
+                reject('Spacecoin is probably already running')
             }
 
             // Wait until komodod is ready
