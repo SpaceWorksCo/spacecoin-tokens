@@ -1,7 +1,8 @@
 {
   "name": "Spacecoin-Tokens",
   "version": "0.0.3",
-  "description": "Tokens Wallet",
+  "description": "An application for using tokens on the Spacecoin blockchain.",
+  "repository": "spaceworksco/spacecoin-tokens",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -16,13 +17,15 @@
     "token",
     "tokens",
     "NFT",
+    "NFTs",
+    "trade",
+    "trading",
     "wallet",
+    "DEX",
     "cc",
-    "GUI",
-    "Komodo",
-    "Securities"
+    "GUI"
   ],
-  "author": "Komodo Platform",
+  "author": "SpaceWorks",
   "devDependencies": {
     "asymmetric-crypto": "^1.0.2",
     "bitcoinjs-lib": "^4.0.2",

@@ -174,11 +174,12 @@ body {
   margin: 0;
   padding: 0;
   list-style: none;
+  background: #262732
 }
 
 .sidebar-nav li {
   text-indent: 20px;
-  line-height: 40px;
+  line-height: 60px;
 }
 
 .sidebar-nav li a {
@@ -204,9 +205,10 @@ body {
 }
 
 .sidebar-nav>.sidebar-brand {
-  height: 65px;
-  font-size: 18px;
+  height: 100px;
+  font-size: 21px;
   line-height: 60px;
+  justify-content: center;
 }
 
 .sidebar-nav>.sidebar-brand a {
@@ -240,8 +242,7 @@ body {
 }
 
 #bottom {
-  position: relative; 
-  height: 10%; 
+  position: relative;
+  height: 10%;
   top: 90%;
 }
-
