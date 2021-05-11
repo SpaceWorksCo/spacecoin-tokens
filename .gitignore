@@ -1,4 +1,6 @@
 node_modules
 .DS_Store
 bin
+dist
 SPACE_7776
+tSPACE_7776

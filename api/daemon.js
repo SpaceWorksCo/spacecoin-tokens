@@ -11,9 +11,10 @@ const fixPath = require('fix-path');
 
 const default_config = {
   bin_folder: getBinsFolder(),
-  chain_name: 'SPACE',
-  coin_name: 'SPACE',
-  chain_launch_params: '-ac_supply=0 -ac_eras=6 -ac_reward=3600000000,2700000000,1800000000,900000000,600000000,300000000 -ac_end=939393,3757572,12212109,325343422,638474735,951606048 -ac_blocktime=30 -ac_staked=50 -ac_cbmaturity=1 -ac_cc=939 -ac_sapling=1 -addnode=165.227.35.158 -addnode=167.172.39.135 -addnode=165.22.64.156 -addnode=188.166.221.247 -printtoconsole'
+  chain_name: 'tSPACE',
+  coin_name: 'tSPACE',
+  // chain_launch_params: '-ac_supply=0 -ac_eras=6 -ac_reward=3600000000,2700000000,1800000000,900000000,600000000,300000000 -ac_end=939393,3757572,12212109,325343422,638474735,951606048 -ac_blocktime=30 -ac_staked=50 -ac_cbmaturity=1 -ac_cc=939 -ac_sapling=1 -addnode=165.227.35.158 -addnode=167.172.39.135 -addnode=165.22.64.156 -addnode=188.166.221.247 -printtoconsole'
+  chain_launch_params: '-ac_supply=3939393 -ac_cc=939 -ac_sapling=1 -addnode=165.227.35.158 -addnode=165.22.64.156 -addnode=188.166.221.247 -printtoconsole'
 }
 
 // Data
@@ -612,6 +613,33 @@ function cancelTokenOrder(action, tokenid, txid) {
 
             if(stdout) {
                 console.log('Broadcasting cancel order... ' + action)
+                broadcastTX(JSON.parse(stdout).hex).then(txid => {
+                    resolve(txid)
+                }).catch(e => {
+                    reject(e)
+                })
+            }
+
+        })
+    })
+}
+
+function heirFund(amount, name, heirpubkey, inactivitytime, memo) {
+    return new Promise((resolve, reject) => {
+        console.log('Creating Heir Fund ' + name + ', supply: ' + supply + ' (' + (supply * 0.00000001) + ') ' + ' memo: ' + memo)
+
+        let args = to_cli_args('heirfund ' + amount + name + heirpubkey + inactivitytime + ' ' )
+        if(memo !== '') args.push('' + memo + '')
+
+        child_process.execFile(cli_path, args, (error, stdout, stderr) => {
+
+            if(stderr) {
+                console.log('heirfund failed: ', stderr)
+                reject(stderr)
+            }
+
+            if(stdout) {
+                console.log('Broadcasting heirfund...')
                 broadcastTX(JSON.parse(stdout).hex).then(txid => {
                     resolve(txid)
                 }).catch(e => {

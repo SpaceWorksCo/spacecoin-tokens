@@ -1,27 +1,26 @@
 {
   "name": "Spacecoin-Tokens",
   "version": "0.0.3",
-  "description": "An application for using tokens on the Spacecoin blockchain.",
+  "description": "An application for interacting with the Spacecoin blockchain.",
   "repository": "spaceworksco/spacecoin-tokens",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "debug": "npm start devmode",
-    "pack": "electron-builder --dir kmd-tokens-wallet-unpacked",
-    "dist": "electron-builder --publish=never",
-    "dist-win": "electron-builder --publish=never  --win"
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --macos --linux --windows",
+    "postinstall": "electron-builder install-app-deps"
   },
   "keywords": [
     "Spacecoin",
     "SPACE",
-    "token",
     "tokens",
     "NFT",
     "NFTs",
-    "trade",
     "trading",
     "wallet",
-    "DEX",
+    "inheritance",
+    "heir",
     "cc",
     "GUI"
   ],
@@ -36,12 +35,41 @@
     "electron-rebuild": "^1.8.4",
     "fix-path": "^2.1.0",
     "jquery": "^3.5.0",
-    "popper.js": "^1.14.4"
+    "popper.js": "^1.14.4",
+    "webpack-cli": "^4.6.0"
   },
   "standard": {
     "globals": [
       "$"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "electron-is-dev": "^2.0.0"
+  },
+  "build": {
+    "appId": "co.spaceworks.stargate",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "squirrel"
+    }
+  }
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="style.css">
-    <title>Spacecoin Tokens App</title>
+    <title>Stargate</title>
   </head>
   <body>
     <!-- NAV-BAR -->
@@ -17,16 +17,16 @@
                 <a href="#">
                   <img src="img/space_logo.png" height="100" class="d-inline-block" alt="">
                 </a>
-                <h4>Tokens App</h4>
+                <h4>Stargate</h4>
             </li><br><br><br><br><br>
+            <li>
+              <a id="nav-dashboard" href="#">Dashboard</a>
+            </li>
             <li>
               <a id="nav-wallet" href="#">Wallet</a>
             </li>
             <li>
-              <a id="nav-tokens" href="#">Tokens</a>
-            </li>
-            <li>
-              <a id="nav-marketplace" href="#">Marketplace</a>
+              <a id="nav-dApps" href="#">dApps</a>
             </li>
             <li>
               <a id="nav-history" href="#">History</a>
@@ -55,58 +55,114 @@
 
 
 
-          <!-- Navbar 1 - WALLET -->
+          <!-- Start Navbar 1 - Dashboard -->
+          <div id="dashboard-page-only">
+
+                  <hr>
+
+                  <!-- Transaction History -->
+                  <label for="textarea-history">Dashboard</label>
+                  <textarea class="form-control" id="textarea-history" rows="5" disabled="true"></textarea>
+                  <textarea class="form-control" id="textarea-history" rows="5" disabled="true"></textarea>
+                  <textarea class="form-control" id="textarea-history" rows="5" disabled="true"></textarea>
+                  <textarea class="form-control" id="textarea-history" rows="5" disabled="true"></textarea>
+
+          </div>
+          <!-- Finish Navbar 6 - Dashboard -->
+
+
+
+          <!-- Start Navbar 2 - WALLET -->
           <div id="wallet-page-only">
 
-            <ul class="nav nav-tabs" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" href="#nav-wallet-tokens" role="tab" data-toggle="tab">Tokens</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#nav-wallet-spacecoin" role="tab" data-toggle="tab">Spacecoin</a>
-              </li>
-            </ul>
+            <hr>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-              <div role="tabpanel" class="tab-pane fade in active show" id="nav-wallet-tokens">
-                  <div class="panel panel-info" id="result_panel">
-                      <div class="panel-body">
-                        <hr>
-                        <div class="header">
-                          <h5 class="title" id="title-token-wallet">Your tokens wallet.</h5>
-                        </div>
+            <div class="header">
+              <h5 class="title" id="title-token-wallet">Spacecoin</h5>
+            </div>
 
-                        <hr>
+            <hr>
 
-                        <div class="header">
-                          <h5 class="title" id="receive-coins-wallet">Receive Tokens</h5>
-                        </div>
+            <div class="header">
+              <h5 class="title" id="receive-coins-wallet">Receive SPACE</h5>
+            </div>
 
-                        <div class="input-group mb-3">
-                          <input id="input-pubkey" type="text" class="form-control" placeholder="Loading the wallet pubkey..." disabled>
-                        </div>
+            <div class="input-group mb-3">
+              <input id="text-new-address" type="text" class="form-control" placeholder="Loading the wallet address..." disabled>
+              <div class="input-group-append">
+                <button id="button-new-address" class="btn btn-outline-secondary" type="button">New Address</button>
+              </div>
+            </div>
 
-                        <hr>
+            <hr>
 
-                        <div class="header">
-                          <h5 class="title" id="receive-coins-wallet">Send Tokens</h5>
-                        </div>
+            <div class="header">
+              <h5 class="title" id="send-coins-wallet">Send SPACE</h5>
+            </div>
 
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <label class="input-group-text" for="select-tokens">Token</label>
-                              </div>
-                              <select class="custom-select" id="select-tokens"></select>
-                            </div>
-                          <hr>
-                          <form id="form-token-send">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">Pubkey</span>
-                              </div>
-                              <input id="input-token-address" class="form-control" placeholder="Enter the pubkey of the recipient." required>
-                            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Balance</span>
+              </div>
+              <input id="balance" class="form-control" placeholder="Loading the amount..." disabled>
+            </div>
+
+            <hr>
+
+            <form id='form-send'>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Address</span>
+                </div>
+                <input id="input-address" class="form-control" placeholder="Enter the address of the recipient." required>
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Amount</span>
+                </div>
+                <input id="input-amount" type="number" min="0" step="any" class="form-control" placeholder="Enter the amount to send." required>
+              </div>
+
+              <button id="button-send" class="btn btn-info" type="submit">Send</button>
+            </form>
+
+            <hr>
+
+            <div class="header">
+                <h5 class="title" id="title-token-wallet">Tokens</h5>
+            </div>
+
+            <hr>
+
+            <div class="header">
+                <h5 class="title" id="receive-coins-wallet">Receive Tokens</h5>
+            </div>
+
+            <div class="input-group mb-3">
+                <input id="input-pubkey" type="text" class="form-control" placeholder="Loading the wallet pubkey..." disabled>
+            </div>
+
+            <hr>
+
+            <div class="header">
+                <h5 class="title" id="receive-coins-wallet">Send Tokens</h5>
+            </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="select-tokens">Token</label>
+                    </div>
+                    <select class="custom-select" id="select-tokens"></select>
+                  </div>
+                <hr>
+                <form id="form-token-send">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Pubkey</span>
+                    </div>
+                    <input id="input-token-address" class="form-control" placeholder="Enter the pubkey of the recipient." required>
+                  </div>
 
                             <div class="input-group mb-3">
                               <div class="input-group-prepend">
@@ -125,177 +181,176 @@
 
                           <hr>
 
+            </div>
+            <!-- Finish Navbar 2 - WALLET -->
+
+
+          <!-- Start Navbar 3 - dApps -->
+          <div id="dApps-page-only">
+            <div id='wrapper'>
+              <div id="sidebar-wrapper" class="bg-dark">
+                <ul class="sidebar-dapp">
+                  <li class="sidebar-brand">
+                    <br>
+                      <a href="#">
+                        <img src="img/space_logo.png" height="100" class="d-inline-block" alt="">
+                      </a>
+                      <h4>Stargate</h4>
+                  </li><br><br><br><br><br>
+                      <li>
+                        <a id="nav-tokens" href="#">Tokens/NFTs</a>
+                      </li>
+                      <li>
+                        <a id="nav-marketplace" href="#">Marketplace</a>
+                      </li>
+                      <li>
+                        <a id="nav-inheritance" href="#">Inheritance</a>
+                      </li>
+                      <li>
+                        <a id="nav-keyvalue" href="#">Key-Value</a>
+                      </li>
+                      <hr>
+                </ul>
+              </div>
+
+
+
+
+            </div>
+          </div>
+          <!-- Finish Navbar 3 - dApps -->
+
+
+          <!-- Start Navbar 4 - History -->
+          <div id="history-page-only">
+
+                  <hr>
+
+                  <!-- Transaction History -->
+                  <label for="textarea-history">App History</label>
+                  <textarea class="form-control" id="textarea-history" rows="26" disabled="true"></textarea>
+
+          </div>
+          <!-- Finish Navbar 4 - History -->
+
+          <!-- Start Navbar 5 - Settings -->
+          <div id="settings-page-only">
+
+                  <hr>
+
+                  <button id="button-show-keys" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-show-keys">Show keys</button>
+
+                  <hr>
+
+                  <button id="button-change-pubkey" type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-change-pubkey">Change Public key</button>
+
+          </div>
+          <!-- Finish Navbar 5 - Settings -->
+
+
+          <!-- dApp Pages -->
+
+          <!-- Start - Tokens -->
+          <div id="tokens-page-only">
+
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" href="#nav-tokens-list" role="tab" data-toggle="tab">List of all Tokens/NFTs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#nav-tokens-create" role="tab" data-toggle="tab">Create A Token/NFT</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active show" id="nav-tokens-list">
+                  <div class="panel panel-info" id="result_panel">
+                      <div class="panel-body">
+                        <hr>
+                        <div class="header">
+                          <h5 class="title" id="title-list-tokens">A list of all tokens on the Spacecoin (SPACE)
+                            blockchain.</h5>
+                        </div>
+
+                        <table class="table table-sm">
+                          <thead>
+                          <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Supply</th>
+                            <th scope="col">Token ID</th>
+                          </tr>
+                          </thead>
+                          <tbody id="table-token-list-full"></tbody>
+                        </table>
+
                       </div>
                     </div>
                 </div>
 
 
-              <div role="tabpanel" class="tab-pane fade" id="nav-wallet-spacecoin">
+              <div role="tabpanel" class="tab-pane fade" id="nav-tokens-create">
                   <div class="panel panel-info" id="result_panel">
                       <div class="panel-body">
 
                         <hr>
-
-                        <div class="header">
-                          <h5 class="title" id="title-token-wallet">Your SPACE wallet.</h5>
-                        </div>
-
-                        <hr>
-
-                        <div class="header">
-                          <h5 class="title" id="receive-coins-wallet">Receive SPACE</h5>
-                        </div>
-
-                        <div class="input-group mb-3">
-                          <input id="text-new-address" type="text" class="form-control" placeholder="Loading the wallet address..." disabled>
-                          <div class="input-group-append">
-                            <button id="button-new-address" class="btn btn-outline-secondary" type="button">New Address</button>
-                          </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="header">
-                          <h5 class="title" id="send-coins-wallet">Send SPACE</h5>
-                        </div>
-
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">Balance</span>
-                          </div>
-                          <input id="balance" class="form-control" placeholder="Loading the amount..." disabled>
-                        </div>
-
-                        <hr>
-
-                        <form id='form-send'>
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">Address</span>
-                            </div>
-                            <input id="input-address" class="form-control" placeholder="Enter the address of the recipient." required>
-                          </div>
-
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">Amount</span>
-                            </div>
-                            <input id="input-amount" type="number" min="0" step="any" class="form-control" placeholder="Enter the amount to send." required>
-                          </div>
-
-                          <button id="button-send" class="btn btn-info" type="submit">Send</button>
-                        </form>
-
-                        <hr>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-
-
-            <!-- Navbar 2 - TOKENS -->
-            <div id="tokens-page-only">
-
-              <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#nav-tokens-list" role="tab" data-toggle="tab">Tokens List</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#nav-tokens-create" role="tab" data-toggle="tab">Create A Token</a>
-                </li>
-              </ul>
-
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active show" id="nav-tokens-list">
-                    <div class="panel panel-info" id="result_panel">
-                        <div class="panel-body">
-                          <hr>
-                          <div class="header">
-                            <h5 class="title" id="title-list-tokens">A list of all tokens on the Spacecoin (SPACE)
-                              blockchain.</h5>
-                          </div>
-
-                          <table class="table table-sm">
-                            <thead>
-                            <tr>
-                              <th scope="col">Name</th>
-                              <th scope="col">Description</th>
-                              <th scope="col">Supply</th>
-                              <th scope="col">Token ID</th>
-                            </tr>
-                            </thead>
-                            <tbody id="table-token-list-full"></tbody>
-                          </table>
-
-                        </div>
-                      </div>
-                  </div>
-
-
-                <div role="tabpanel" class="tab-pane fade" id="nav-tokens-create">
-                    <div class="panel panel-info" id="result_panel">
-                        <div class="panel-body">
-
-                          <hr>
-                          <!-- CREATE TOKEN -->
-                                <!-- Header -->
-                                <div class="form-header">
-                                  <h5 class="modal-title" id="title-create-token">Create a token on the Spacecoin (SPACE) blockchain.</h5>
-                                </div>
-                                <hr>
-                                <!-- Body -->
-                                <form id="form-create-token-submit">
-                                  <div class="form-body">
-                                    <div class="form-group">
-                                      <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                          <span class="input-group-text">Name</span>
-                                        </div>
-                                        <input type="text" class="form-control" id="input-create-token-name"  placeholder="A short name for the token, eg. TOK" required>
+                        <!-- CREATE TOKEN -->
+                              <!-- Header -->
+                              <div class="form-header">
+                                <h5 class="modal-title" id="title-create-token">Create a token on the Spacecoin (SPACE) blockchain.</h5>
+                              </div>
+                              <hr>
+                              <!-- Body -->
+                              <form id="form-create-token-submit">
+                                <div class="form-body">
+                                  <div class="form-group">
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Name</span>
                                       </div>
-                                      <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                          <span class="input-group-text">Description</span>
-                                        </div>
-                                        <input type="text" class="form-control" id="input-create-token-description" placeholder="Information about your token">
+                                      <input type="text" class="form-control" id="input-create-token-name"  placeholder="A short name for the token, eg. TOK." required>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Description</span>
                                       </div>
-                                      <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                          <span class="input-group-text">Supply</span>
-                                        </div>
-                                        <input id="input-create-token-supply" type="number" min="0" step="any" class="form-control" placeholder="The amount you'll supply for this token, eg. 0.01" required>
+                                      <input type="text" class="form-control" id="input-create-token-description" placeholder="A description of your token/NFT.">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Supply</span>
                                       </div>
+                                      <input id="input-create-token-supply" type="number" min="0" step="any" class="form-control" placeholder="The supply of the token. For NFTs use 1." required>
                                     </div>
                                   </div>
-                                  <!-- Footer -->
-                                  <div class="form-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button id="button-create-token-submit" type="submit" class="btn btn-info">Submit</button>
-                                  </div>
-                                </form>
+                                </div>
+                                <!-- Footer -->
+                                <div class="form-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                  <button id="button-create-token-submit" type="submit" class="btn btn-info">Submit</button>
+                                </div>
+                              </form>
 
-                              </div>
                             </div>
                           </div>
-              </div>
-          </div>
+                        </div>
+            </div>
+        </div>
+        <!-- Finish - Tokens -->
 
-
-          <!-- Navbar 3 - Marketplace -->
+          <!-- Start - Marketplace -->
           <div id="marketplace-page-only">
 
               <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#nav-trade-buy" role="tab" data-toggle="tab">Buy</a>
+                  <a class="nav-link active" href="#nav-trade-buy" role="tab" data-toggle="tab">Buy Tokens/NFTs</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#nav-trade-sell" role="tab" data-toggle="tab">Sell</a>
+                  <a class="nav-link" href="#nav-trade-sell" role="tab" data-toggle="tab">Sell Tokens/NFTs</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#nav-trade-orders" role="tab" data-toggle="tab">My Orders</a>
+                  <a class="nav-link" href="#nav-trade-orders" role="tab" data-toggle="tab">My Open Orders</a>
                 </li>
               </ul>
 
@@ -411,31 +466,111 @@
 
               </div>
           </div>
+          <!-- Finish - Marketplace -->
+
+          <!-- Start - Inheritance -->
+          <div id="inheritance-page-only">
+
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" href="#nav-inheritance-list" role="tab" data-toggle="tab">My Heir Funds</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#nav-inheritance-create" role="tab" data-toggle="tab">Create An Heir Fund</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#nav-inheritance-claim" role="tab" data-toggle="tab">Claim from an Heir Fund</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active show" id="nav-inheritance-list">
+                  <div class="panel panel-info" id="result_panel">
+                      <div class="panel-body">
+                        <hr>
+                        <div class="header">
+                          <h5 class="title" id="title-list-tokens">A list of all tokens on the Spacecoin (SPACE)
+                            blockchain.</h5>
+                        </div>
+
+                        <table class="table table-sm">
+                          <thead>
+                          <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Supply</th>
+                            <th scope="col">Token ID</th>
+                          </tr>
+                          </thead>
+                          <tbody id="table-token-list-full"></tbody>
+                        </table>
+
+                      </div>
+                    </div>
+                </div>
 
 
-          <!-- Navbar 4 - History -->
-          <div id="history-page-only">
+              <div role="tabpanel" class="tab-pane fade" id="nav-inheritance-create">
+                  <div class="panel panel-info" id="result_panel">
+                      <div class="panel-body">
 
-                  <hr>
+                        <hr>
+                        <!-- CREATE FUND -->
+                              <!-- Header -->
+                              <div class="form-header">
+                                <h5 class="modal-title" id="title-create-fund">Create an heir fund on the Spacecoin (SPACE) blockchain.</h5>
+                              </div>
+                              <hr>
+                              <!-- Body -->
+                              <form id="form-create-fund-submit">
+                                <div class="modal-body">
+                                  <div class="form-group">
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Name</span>
+                                      </div>
+                                      <input type="text" class="form-control" id="input-create-fund-name"  placeholder="A short name for the heir fund." required>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Amount</span>
+                                      </div>
+                                      <input id="input-create-fund-amount" type="number" min="0" step="any" class="form-control" placeholder="The amount of spacecoin to put in the fund." required>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Public Key</span>
+                                      </div>
+                                      <input type="text" class="form-control" id="input-create-fund-heirpubkey"  placeholder="The heir's public key." required>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Inactivity Time</span>
+                                      </div>
+                                      <input id="input-create-fund-inactivitytime" type="number" min="0" step="any" class="form-control" placeholder="The amount of time until the fund becomes available." required>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Memo</span>
+                                      </div>
+                                      <input type="text" class="form-control" id="input-create-fund-memo" placeholder="Information about your heir fund.">
+                                    </div>
+                                  </div>
+                                </div>
 
-                  <!-- Transaction History -->
-                  <label for="textarea-history">App History</label>
-                  <textarea class="form-control" id="textarea-history" rows="26" disabled="true"></textarea>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                  <button id="button-create-fund-submit" type="submit" class="btn btn-info">Submit</button>
+                                </div>
+                              </form>
 
-          </div>
-
-          <!-- Navbar 5 - Settings -->
-          <div id="settings-page-only">
-
-                  <hr>
-
-                  <button id="button-show-keys" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-show-keys">Show keys</button>
-
-                  <hr>
-
-                  <button id="button-change-pubkey" type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-change-pubkey">Change Public key</button>
-
-          </div>
+                            </div>
+                          </div>
+                        </div>
+            </div>
+        </div>
+        <!-- Finish - Inheritance -->
 
         </div>
 
@@ -792,6 +927,64 @@
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                       <button id="button-token-fill-order-submit" type="submit" class="btn btn-info">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+
+
+            <!-- CREATE FUND -->
+            <div class="modal fade" id="modal-create-fund" tabindex="-1" role="dialog" aria-labelledby="title-create-fund" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="title-create-fund">Create an Heir Fund</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <form id="form-create-fund-submit">
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Name</span>
+                          </div>
+                          <input type="text" class="form-control" id="input-create-fund-name"  placeholder="A short name for the heir fund." required>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Amount</span>
+                          </div>
+                          <input id="input-create-fund-amount" type="number" min="0" step="any" class="form-control" placeholder="The amount of spacecoin to put in the fund." required>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Public Key</span>
+                          </div>
+                          <input type="text" class="form-control" id="input-create-fund-heirpubkey"  placeholder="The heir's public key." required>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Inactivity Time</span>
+                          </div>
+                          <input id="input-create-fund-inactivitytime" type="number" min="0" step="any" class="form-control" placeholder="The amount of time until the fund becomes available." required>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Memo</span>
+                          </div>
+                          <input type="text" class="form-control" id="input-create-fund-memo" placeholder="Information about your heir fund.">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <button id="button-create-fund-submit" type="submit" class="btn btn-info">Submit</button>
                     </div>
                   </form>
                 </div>

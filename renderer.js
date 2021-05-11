@@ -5,7 +5,7 @@ window.Bootstrap = require('./node_modules/bootstrap/dist/js/bootstrap.js')
 
 ////// SET PAGES
 // Main pages
-let pages = ['wallet', 'tokens', 'marketplace', 'history', 'settings']
+let pages = ['dashboard', 'wallet', 'dApps', 'history', 'settings', 'tokens', 'marketplace', 'inheritance']
 
 // Launch with the first page
 openPage(pages[0])
